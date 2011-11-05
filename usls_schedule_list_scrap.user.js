@@ -22,6 +22,8 @@ function extractSched(response){
     var tblSched = '';
     var tblRows = [];
 
+    // Iterate through div DOM for element with
+    // class_sched id
     for(i = 0; i < dummyDiv.children.length; i++){
 	if(dummyDiv.children[i].id == "class_sched"){
 	    tblSched = dummyDiv.children[i];
@@ -49,8 +51,20 @@ GM_xmlhttpRequest({
     onload: extractSched
 });
 
-var uiTab = document.getElementById('ui-tabs-1');
-var fakeLink = document.createElement('a');
-fakeLink.innerHTML = "Save Schedule...";
-uiTab.appendChild(fakeLink);
+function insertSaveButton(){
+    var uiTabs = document.getElementById('tabs');
+    var saveLink = document.createElement('a');
+    saveLink.innerHTML = "Save Schedule";
+
+    saveLink.style.background = "#459E00";
+    saveLink.style.padding = "5px";
+    saveLink.style.color = "white";
+    saveLink.style.fontWeight = "bold";
+    saveLink.style.marginLeft = "15px";
+    saveLink.style.cursor = "pointer";
+
+    uiTabs.appendChild(saveLink);
+
+}
+insertSaveButton();
 
