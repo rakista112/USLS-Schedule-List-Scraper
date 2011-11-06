@@ -3,17 +3,17 @@
 // @description Makes it easier to extract and save your schedule in other file formats
 // @include http://*students.usls.edu.ph/index.cfm?*
 // @version 0.42
-// @copyright Ray John E. Alovera
+// @author Ray John Alovera
+// @copyright 2011 Ray John E. Alovera
+// @license GNU GPLv3 or later <http://www.gnu.org/licenses/gpl.html>
 // ==/UserScript==
 
-// ui-tabs-1
-// class_sched
-
 /*
-  Insert save button
-  After press, do xmlhttprequest
+  Process:
+  Insert export button
+  After click, do xmlhttprequest
   Format output
-  Print output
+  Print output in new tab
 */
 
 String.prototype.trim = function(){
