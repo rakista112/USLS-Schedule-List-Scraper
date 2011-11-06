@@ -55,13 +55,32 @@ function insertSaveButton(){
     var uiTabs = document.getElementById('tabs');
     var saveLink = document.createElement('a');
     saveLink.innerHTML = "Save Schedule";
-
-    saveLink.style.background = "#459E00";
-    saveLink.style.padding = "5px";
-    saveLink.style.color = "white";
-    saveLink.style.fontWeight = "bold";
-    saveLink.style.marginLeft = "15px";
-    saveLink.style.cursor = "pointer";
+    saveLink.id = "btnSchedSave";
+    saveLink.href ='#';
+    
+    GM_addStyle("\
+        #btnSchedSave{\
+        background: #459E00;\
+        padding: 8px 10px;\
+        color: white;\
+        font-weight: bold;\
+        margin: 15px;\
+        cursor: pointer;\
+        hover: #4EB300;\
+        text-decoration:none;\
+        }\
+        \
+        #btnSchedSave:hover{\
+            background:#60DB00;\
+        \
+        }\
+        \
+        #btnSchedSave:active{\
+            background:#FF2617;\
+        \
+        }\
+        \
+        ");
 
     uiTabs.appendChild(saveLink);
 
