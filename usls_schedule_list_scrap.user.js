@@ -27,8 +27,22 @@ function formatSched(tblSched){
     
     // Dummy elements for output
     var dummyDiv = document.createElement('div');
+    var html = document.createElement('html');
+    var head = document.createElement('head');
+    var body = document.createElement('body');
     var tblResult = document.createElement('table');
-    tblResult.className = 'class_sched';
+
+
+    // For injecting styles
+    var oddCSS = document.createElement('style');
+
+    oddCSS.type = 'text/css';
+    oddCSS.textContent = '.odd{ background-color:#DCE4CF;}';
+
+    // Change table id to class_sched
+    tblResult.id = 'class_sched';
+    // Change class name to tablesorter
+    tblResult.className = 'tablesorter';
 
     for(row = 0; row < tblSched.length; row++){
 	var tr = document.createElement('tr');
@@ -38,12 +52,30 @@ function formatSched(tblSched){
 	    var td = document.createElement('td');
 	    td.textContent = tblSched[row][col];
 
+	    // if in Units column
+	    // change class names to unit
+	    if(col == 2){
+		td.className = 'unit';
+	    }
+
 	    tr.appendChild(td);
 
 	}
 
+	    // Give odd rows odd class name
+
+	    // Only check rows below header
+	    if(row > 0 && (row - 1) % 2 == 1){
+		tr.className = 'odd';
+	    }
+
+
 	tblResult.appendChild(tr);
-	dummyDiv.appendChild(tblResult);
+	body.appendChild(tblResult);
+	head.appendChild(oddCSS);
+	html.appendChild(head);
+	html.appendChild(body);
+	dummyDiv.appendChild(html);
 
     }
 
@@ -86,26 +118,29 @@ function extractSched(response){
 function insertSaveButton(){
 
     var uiTabs = document.getElementById('tabs');
-    var saveLink = document.createElement('a');
+    var saveLink = document.createElement('p');
 
-    saveLink.innerHTML = "Save Schedule";
+    saveLink.innerHTML = "Export Schedule";
     saveLink.id = "btnSchedSave";
     saveLink.href ='#';
     
     GM_addStyle("\
         #btnSchedSave{\
         background: #459E00;\
-        padding: 8px 10px;\
+        padding: 4px 8px;\
         color: white;\
         font-weight: bold;\
+        font-size:14px;\
+        text-align:center;\
         margin: 15px;\
         cursor: pointer;\
         hover: #4EB300;\
         text-decoration:none;\
-        border-radius:5px;\
-        -moz-border-radius:5px;\
-        -o-border-radius:5px;\
-        -webkit-border-radius:5px;\
+        width:110px;\
+        border-radius:3px;\
+        -moz-border-radius:3px;\
+        -o-border-radius:3px;\
+        -webkit-border-radius:3px;\
         }\
         \
         #btnSchedSave:hover{\
