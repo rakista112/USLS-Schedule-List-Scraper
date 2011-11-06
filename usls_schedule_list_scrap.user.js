@@ -32,6 +32,9 @@ function formatSched(tblSched){
     var body = document.createElement('body');
     var tblResult = document.createElement('table');
 
+    // For the header
+    var thead = document.createElement('thead');
+
 
     // For injecting styles
     var oddCSS = document.createElement('style');
@@ -43,9 +46,8 @@ function formatSched(tblSched){
                          'background-color:#cdcdcd;'+
                          'font-family:arial;'+
                          'margin:10px 0 15px;'+
-                         'text-align:left;'+
-                         'width:100%;}'
-                         ;
+	                 'text-align:left;' +
+                         'width:100%;}';
 
     oddCSS.textContent += 'table.tablesorter tbody td {'+
                           'background-color: #FFFFFF;'+
@@ -53,9 +55,11 @@ function formatSched(tblSched){
                           'padding: 4px;'+
                           'vertical-align: top;}';
 
-    oddCSS.textContent += 'table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp{' +
-	                  'background-color: #307E04;' +
-                          'color:white;}';
+    oddCSS.textContent += 'table.tablesorter thead tr th, table.tablesorter tfoot tr th{' +
+	                  'background-color: #C4E4A5;' +
+	                  'border: 1px solid #FFFFFF;' +
+                          'padding:4px;}';
+
 
     oddCSS.textContent += '.unit{text-align:center;}';
 
@@ -64,6 +68,9 @@ function formatSched(tblSched){
     tblResult.id = 'class_sched';
     // Change class name to tablesorter
     tblResult.className = 'tablesorter';
+
+    // Modify table's cellspacing
+    tblResult.cellSpacing = '1';
 
     for(row = 0; row < tblSched.length; row++){
 	var tr = document.createElement('tr');
@@ -90,15 +97,20 @@ function formatSched(tblSched){
 		tr.className = 'odd';
 	    }
 
-
 	tblResult.appendChild(tr);
-	body.appendChild(tblResult);
-	head.appendChild(oddCSS);
-	html.appendChild(head);
-	html.appendChild(body);
-	dummyDiv.appendChild(html);
 
     }
+
+    // Put the header elements in thead
+    thead.appendChild(tblResult.rows[0]);
+    thead.innerHTML = thead.innerHTML.replace(/td/g, 'th');
+
+    tblResult.insertBefore(thead, tblResult.firstChild);
+    body.appendChild(tblResult);
+    head.appendChild(oddCSS);
+    html.appendChild(head);
+    html.appendChild(body);
+    dummyDiv.appendChild(html);
 
     return dummyDiv;
 
