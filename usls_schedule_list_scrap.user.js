@@ -12,8 +12,43 @@
 // ui-tabs-1
 // class_sched
 
+/*
+  Insert save button
+  After press, do xmlhttprequest
+  Format output
+  Print output
+*/
+
 String.prototype.trim = function(){
     return this.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+function formatSched(tblSched){
+    
+    // Dummy elements for output
+    var dummyDiv = document.createElement('div');
+    var tblResult = document.createElement('table');
+    tblResult.className = 'class_sched';
+
+    for(row = 0; row < tblSched.length; row++){
+	var tr = document.createElement('tr');
+
+	// iterate through table and put elements in table
+	for(col = 0; col < tblSched[0].length; col++){
+	    var td = document.createElement('td');
+	    td.textContent = tblSched[row][col];
+
+	    tr.appendChild(td);
+
+	}
+
+	tblResult.appendChild(tr);
+	dummyDiv.appendChild(tblResult);
+
+    }
+
+    return dummyDiv;
+
 }
 
 function extractSched(response){
@@ -40,20 +75,19 @@ function extractSched(response){
 	}
     }
 
+    var formattedSched = formatSched(tblRows);
+
     var JSONSched = JSON.stringify(tblRows);
 
-    GM_openInTab('data:text/plain;charset=UTF-8,' + encodeURIComponent(JSONSched));
+    GM_openInTab('data:text/html;charset=UTF-8,' + encodeURIComponent(formattedSched.innerHTML));
 }
 
-GM_xmlhttpRequest({
-    method: "GET",
-    url: "http://students.usls.edu.ph/modules/modules.class_schedule.cfm",
-    onload: extractSched
-});
 
 function insertSaveButton(){
+
     var uiTabs = document.getElementById('tabs');
     var saveLink = document.createElement('a');
+
     saveLink.innerHTML = "Save Schedule";
     saveLink.id = "btnSchedSave";
     saveLink.href ='#';
@@ -68,6 +102,10 @@ function insertSaveButton(){
         cursor: pointer;\
         hover: #4EB300;\
         text-decoration:none;\
+        border-radius:5px;\
+        -moz-border-radius:5px;\
+        -o-border-radius:5px;\
+        -webkit-border-radius:5px;\
         }\
         \
         #btnSchedSave:hover{\
@@ -82,8 +120,21 @@ function insertSaveButton(){
         \
         ");
 
+    // Add click event listener
+    saveLink.addEventListener('click', function (){
+	GM_xmlhttpRequest({
+	    method: "GET",
+	    url: "http://students.usls.edu.ph/modules/modules.class_schedule.cfm",
+	    onload: extractSched
+	});
+	return false;
+
+    }, false);
+
     uiTabs.appendChild(saveLink);
 
 }
 insertSaveButton();
+
+
 
