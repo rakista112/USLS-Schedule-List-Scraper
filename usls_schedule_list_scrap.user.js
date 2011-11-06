@@ -37,7 +37,7 @@ function formatSched(tblSched){
     var oddCSS = document.createElement('style');
 
     oddCSS.type = 'text/css';
-    oddCSS.textContent = '.odd{ background-color:#DCE4CF;}';
+    oddCSS.textContent = 'table.tablesorter tbody tr.odd td{background-color:#DCE4CF;}';
 
     oddCSS.textContent += 'table.tablesorter{'+
                          'background-color:#cdcdcd;'+
@@ -46,6 +46,18 @@ function formatSched(tblSched){
                          'text-align:left;'+
                          'width:100%;}'
                          ;
+
+    oddCSS.textContent += 'table.tablesorter tbody td {'+
+                          'background-color: #FFFFFF;'+
+                          'color: #3D3D3D;'+
+                          'padding: 4px;'+
+                          'vertical-align: top;}';
+
+    oddCSS.textContent += 'table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp{' +
+	                  'background-color: #307E04;' +
+                          'color:white;}';
+
+    oddCSS.textContent += '.unit{text-align:center;}';
 
 
     // Change table id to class_sched
@@ -62,8 +74,8 @@ function formatSched(tblSched){
 	    td.textContent = tblSched[row][col];
 
 	    // if in Units column
-	    // change class names to unit
-	    if(col == 2){
+	    // change class to unit
+	    if(col == 2 && row > 0){
 		td.className = 'unit';
 	    }
 
