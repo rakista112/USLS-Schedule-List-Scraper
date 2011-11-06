@@ -39,6 +39,15 @@ function formatSched(tblSched){
     oddCSS.type = 'text/css';
     oddCSS.textContent = '.odd{ background-color:#DCE4CF;}';
 
+    oddCSS.textContent += 'table.tablesorter{'+
+                         'background-color:#cdcdcd;'+
+                         'font-family:arial;'+
+                         'margin:10px 0 15px;'+
+                         'text-align:left;'+
+                         'width:100%;}'
+                         ;
+
+
     // Change table id to class_sched
     tblResult.id = 'class_sched';
     // Change class name to tablesorter
